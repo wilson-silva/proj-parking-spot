@@ -32,7 +32,7 @@ public class ParkingSpotDto {
     private String responsibleName;
 
     @NotBlank
-    private String apartament;
+    private String apartment;
 
     @NotBlank
     private String block;
