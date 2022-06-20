@@ -3,12 +3,15 @@ package com.api.parkingcontrol.controllers;
 import com.api.parkingcontrol.dtos.ParkingSpotDto;
 import com.api.parkingcontrol.models.ParkingSpotModel;
 import com.api.parkingcontrol.services.ParkingSpotService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +20,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Optional;
 
+@Api(value ="API REST PARKING SPOT")
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/parking-spot")
@@ -28,7 +32,8 @@ public class ParkingSpotController {
         this.parkingSpotService = parkingSpotService;
     }
 
-    @PostMapping
+    @ApiOperation(value = "Cadastra vaga")
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> saveParkingSpot(@RequestBody @Valid ParkingSpotDto parkingSpotDto) {
         if (parkingSpotService.existsByLicensePlateCar(parkingSpotDto.getLicensePlateCar())) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflit: License Plate Car is already in use!");
@@ -46,13 +51,15 @@ public class ParkingSpotController {
         return ResponseEntity.status(HttpStatus.CREATED).body(parkingSpotService.save(parkingSpotModel));
     }
 
-    @GetMapping
+    @ApiOperation(value = "Retorna lista de vagas")
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Page<ParkingSpotModel>> getAllParkingSpots(@PageableDefault(
             page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC)Pageable pageable) {
         return ResponseEntity.status(HttpStatus.OK).body(parkingSpotService.findAll(pageable));
     }
 
-    @GetMapping("/{id}")
+    @ApiOperation(value = "Buscar vaga")
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> getOneParkingSpot(@PathVariable(value = "id") Long id) {
         Optional<ParkingSpotModel> parkingSpotModelOptional = parkingSpotService.findById(id);
         if (!parkingSpotModelOptional.isPresent()) {
@@ -61,6 +68,7 @@ public class ParkingSpotController {
         return ResponseEntity.status(HttpStatus.OK).body(parkingSpotModelOptional.get());
     }
 
+    @ApiOperation(value = "Exclui uma vaga")
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteParkingSpot(@PathVariable(value = "id") Long id){
         Optional<ParkingSpotModel> parkingSpotModelOptional = parkingSpotService.findById(id);
@@ -71,7 +79,8 @@ public class ParkingSpotController {
         return ResponseEntity.status(HttpStatus.OK).body("Parking Spot deleted successfully.");
     }
 
-    @PutMapping("/{id}")
+    @ApiOperation(value = "Altera uma vaga")
+    @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> updateParkingSpot(@PathVariable(value = "id") Long id,
                                                     @RequestBody @Valid ParkingSpotDto parkingSpotDto){
         Optional<ParkingSpotModel> parkingSpotModelOptional = parkingSpotService.findById(id);
