@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.io.Serial;
+//import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @Table(name = "TB_PARKING_SPOT")
 public class ParkingSpotModel implements Serializable {
 
-    @Serial
+    //@Serial
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -48,6 +48,6 @@ public class ParkingSpotModel implements Serializable {
     private String apartment;
 
     @Column(nullable = false, length = 30)
-    private String block;
+    private String bloc;
 
 }

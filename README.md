@@ -5,18 +5,12 @@
 
 Este projeto é uma API para controle de vagas de um estacionamento.
 Nesta API é possivel implementar todos os CRUD da aplicação.
-Foi usado tecnologias modernas como:
-- Spring Boot
-- Spring MVC
-- Spring Data JPA
-- Spring Validation
-
 
 ## Como executar o projeto
 
 Pré-requisitos:
 
-* Java 17 ou versões superiores.
+* Java 11 ou versões superiores.
 * Maven 3.6.3 ou versões superiores.
 * Intellj IDEA Community Edition ou sua IDE favorita.
 * Controle de versão GIT instalado na sua máquina.
@@ -55,8 +49,10 @@ localhost:8080/swagger-ui.html
 - Lombok
 - Bean Validation
 - Maven
-- Mysql
-
+- Flyway
+- Mysql ou H2(Para quem não tiver o MySQL localmente)
+Neste caso terá que fazer alterações no POM e no aplication.properties(Escolher o driver e configuraçoes do banco que será utilizado 
+e comentar o outro).
 
 ## Autor
 

@@ -32,8 +32,8 @@ public class ParkingSpotService {
         return parkingSpotRepository.existsByParkingSpotNumber(parkingSpotNumber);
     }
 
-    public boolean existsByApartmentAndBlock(String apartament, String block) {
-        return parkingSpotRepository.existsByApartmentAndBlock(apartament, block);
+    public boolean existsByApartmentAndBlock(String apartament, String bloc) {
+        return parkingSpotRepository.existsByApartmentAndBloc(apartament, bloc);
     }
 
     public Page<ParkingSpotModel> findAll(Pageable pageable) {
